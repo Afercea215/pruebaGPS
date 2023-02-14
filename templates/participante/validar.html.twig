@@ -3,5 +3,25 @@
 {% block title %}Validar{% endblock %}
 
 {% block content %}
-    <div id='tablaValidar'></div>
+    <table id='tablaValidar'{#  data-page-length='2' #}>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>banda</th>
+                <th>modo</th>
+                <th>emisor</th>
+                <th>valido</th>
+            </tr>
+        </thead>
+        <tbody>
+           {#  <tr>
+                <td>Row 1 Data 1</td>
+                <td>Row 1 Data 2</td>
+            </tr>
+            <tr>
+                <td>Row 2 Data 1</td>
+                <td>Row 2 Data 2</td>
+            </tr> #}
+        </tbody>
+    </table>
 {% endblock %}

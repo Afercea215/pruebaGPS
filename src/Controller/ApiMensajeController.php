@@ -20,10 +20,23 @@ class ApiMensajeController extends AbstractController
     #[Route('/api/mensaje', name: 'app_api_mensaje_getAll', methods:'GET')]
     public function getAll(MensajeRepository $mj): JsonResponse
     {   
+        $juez=$this->getUser()->isJuez();
         $mensajes = [];
-        foreach ($mj->findAll() as $key => $mensaje) {
-            $mensajes[] = $mensaje->toArray();
+
+        if ($juez) {
+            foreach ($mj->findAll() as $key => $mensaje) {
+                if ($mensaje->getReceptor() == $this->getUser()) {
+                    $mensajes[] = $mensaje->toArray();
+                }
+            }
+        }else{
+            foreach ($mj->findAll() as $key => $mensaje) {
+                if ($mensaje->getEmisor() == $this->getUser()) {
+                    $mensajes[] = $mensaje->toArray();
+                }
+            }
         }
+
         return $this->json(['status'=>'exito', 'mensajes' => $mensajes], 200);
     }
 
@@ -68,29 +81,36 @@ class ApiMensajeController extends AbstractController
         
         try {
             $m = $mer->findOneById($id);
-
-            if (!$m) {
-                return $this->json('No se ha encontrado ningun mensaje con la id -> ' . $id, 404);
-            }
             
-            $m->setModo($mr->findOneById($request->request->get('modo')));
-            $m->setBanda($br->findOneById($request->request->get('banda')));
-            $m->setEmisor($ur->findOneById($request->request->get('emisor')));
-            $m->setReceptor($ur->findOneById($request->request->get('receptor')));
-            $m->setFecha(new DateTime($request->request->get('fecha')));
-            $m->setValido($request->request->get('valido') == 'false' ? false : true);
-
+            if (!$m) {
+                return $this->json('No se ha encontrado ningun mensaje con la id -> ' . $id, 200);
+            }
+            $modo = $mr->findOneById($request->request->get('modo'));
+            $m->setModo($modo);
+            $banda = $br->findOneById($request->request->get('banda'));
+            $m->setBanda($banda);
+            $emisor = $ur->findOneById($request->request->get('emisor'));
+            $m->setEmisor($emisor);
+            $receptor = $ur->findOneById($request->request->get('receptor'));
+            $m->setReceptor($receptor);
+            $fecha = new DateTime($request->request->get('fecha'));
+            $m->setFecha($fecha);
+            $valido = $request->request->get('valido') == 'false' ? false : true;
+            $m->setValido($valido);
+            
             $entityManager->persist($m);
+
             $entityManager->flush();
       
             return $this->json(['status'=>'exito','mensaje' => $m->toArray()],200);
         } catch (\Throwable $th) {
-            return $this->json('Error, no se ha podido modificar el mensaje',401);
+
+            return $this->json(var_dump($th),410);
         }
     }
 
 
-    #[Route('/api/mensaje/{id}', name: 'app_api_mensaje_put', methods:'DELETE')]
+    #[Route('/api/mensaje/{id}', name: 'app_api_mensaje_delete', methods:'DELETE')]
     public function delete(ManagerRegistry $doctrine, MensajeRepository $mer, int $id): JsonResponse
     {   
         $entityManager = $doctrine->getManager();

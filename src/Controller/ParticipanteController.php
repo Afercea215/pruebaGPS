@@ -32,6 +32,10 @@ class ParticipanteController extends AbstractController
                 $entityManager->persist($mensaje);
                 $entityManager->flush();
                 
+                $this->addFlash(
+                    'success',
+                    'Mensaje creado!'
+                );
             } catch (\Throwable $th) {
                 $this->addFlash(
                     'error',

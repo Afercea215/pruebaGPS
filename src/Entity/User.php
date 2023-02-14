@@ -128,6 +128,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function isJuez(){
+        return in_array('ROLE_JUEZ', $this->roles);
+    }
+
     public function removeMensaje(Mensaje $mensaje): self
     {
         if ($this->mensajes->removeElement($mensaje)) {

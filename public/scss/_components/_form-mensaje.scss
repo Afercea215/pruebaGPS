@@ -1,0 +1,42 @@
+.form-mensaje{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+
+}
+
+#mensaje_fecha{
+    display: flex;
+    & #mensaje_fecha_date{
+        display: flex;
+    }
+    & #mensaje_fecha_time{
+        display: flex;
+    }
+}
+
+@media (max-width:1000px) {
+    #mensaje_fecha{
+        display: block;
+    }
+}
+@media (max-width:750px) {
+    #mensaje_fecha{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        & #mensaje_fecha_date{
+            display: block;
+        }
+        & #mensaje_fecha_time{
+            display: block;
+        }
+    }
+    .form-mensaje{
+        flex-direction: column;
+    
+    }
+}

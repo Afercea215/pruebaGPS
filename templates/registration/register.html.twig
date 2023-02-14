@@ -5,13 +5,21 @@
 {% block body %}
     <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
+    {{ form_start(registrationForm, { 'attr' : { 'class': 'form col-lg-4 col-md-6 col-sm-9 col-xs-12 text-center mt-3' } }) }}
+    <div class='w-100 text-center'>
         {{ form_row(registrationForm.email) }}
+    </div>
+    <div class='w-100 text-center'>
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
         }) }}
+    </div>
+    <div class='w-100 text-center'>
         {{ form_row(registrationForm.agreeTerms) }}
 
-        <button type="submit" class="btn">Register</button>
+    </div>
+    <div class='w-100 text-center'>
+        <button type="submit" class="btn btn-lg btn-primary">Register</button>
+    </div>
     {{ form_end(registrationForm) }}
 {% endblock %}

@@ -7,6 +7,10 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="/bootstrap/bootstrap-grid.css">
+            <link rel="stylesheet" href="/bootstrap/bootstrap.css">
+            <link rel="stylesheet" href="/bootstrap/bootstrap-reboot.css">
+            <link rel="stylesheet" href="/css/main.css">
             {# jqery #}
             <link rel="stylesheet" href="/js/ui/css/jquery-ui.css">
             <link rel="stylesheet" href="/js/ui/css/jquery-ui.structure.css">
@@ -14,13 +18,29 @@
 
             {# datatable #}
             <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+        
+            {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> #}
         {% endblock %}
     </head>
 
     <body>
         {% block body %}
             {% block header %}
-                
+                {% for flash_message in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success fade show text-center">
+                        <div class='w-100 d-flex flex-row justify-content-between'>
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                            {{ flash_message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% for flash_message in app.session.flashbag.get('error') %}
+                    <div class="alerta alerta--error ">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
             {% endblock %}
 
             {% block content %}
@@ -30,6 +50,8 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="/js/boostrap/bootstrap.bundle.js"></script>
+            <script src="/js/boostrap/bootstrap.js"></script>
              {# JQUERY #}
             <script src="/js/js/jquery.js"></script>
             <script src="/js/js/jquery-ui.js"></script>
@@ -39,6 +61,7 @@
 
             {# funcionamiento #}
             <script src="/js/funcionamiento/validarMsg.js"></script>
+            <script src="/js/funcionamiento/btn.js"></script>
             
         {% endblock %}
     </body>
