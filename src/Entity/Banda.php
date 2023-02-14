@@ -73,6 +73,11 @@ class Banda
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->getDistancia().'m, '.$this->getRangoMin().'mhz - '.$this->getRangoMax().'mhz.';
+    }
+
     /**
      * @return Collection<int, Mensaje>
      */

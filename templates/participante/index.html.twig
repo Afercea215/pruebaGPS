@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participante{% endblock %}
+
+{% block content %}
+    {{ form_start(form, { 'attr' : { 'class': 'form col-lg-4 col-md-6 col-sm-9 col-xs-12 text-center mt-3' } }) }}
+        {{ form_row(form.fecha) }}
+        {{ form_row(form.banda)}}
+        {{ form_row(form.modo)}}
+        {{ form_row(form.receptor) }}
+        <button type="submit" class="w-50 boton">Guardar</button>
+    {{ form_end(form) }}
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Banda</th>
+                <th>Modo</th>
+                <th>Receptor</th>
+                <th>Valido</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mensaje in mensajes %}
+            {#  <pre>
+                {{ dump(mensaje.valido) }}
+            </pre> #}
+            <tr>
+                    <td>{{mensaje.fecha|date('Y-m-d H-m-i')}}</td>
+                    <td>{{mensaje.banda}}</td>
+                    <td>{{mensaje.modo}}</td>
+                    <td>{{mensaje.receptor}}</td>
+                    <td>{% if mensaje.valido %}
+                        <img src='/images/tick.png'>
+                    {% else %}
+                        <img src='/images/x.png' style="width:50px">
+                    {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}

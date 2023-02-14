@@ -7,13 +7,39 @@
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            {# jqery #}
+            <link rel="stylesheet" href="/js/ui/css/jquery-ui.css">
+            <link rel="stylesheet" href="/js/ui/css/jquery-ui.structure.css">
+            <link rel="stylesheet" href="/js/ui/css/jquery-ui.theme.css">
+
+            {# datatable #}
+            <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css">
+        {% endblock %}
+    </head>
+
+    <body>
+        {% block body %}
+            {% block header %}
+                
+            {% endblock %}
+
+            {% block content %}
+                
+            {% endblock %}
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+             {# JQUERY #}
+            <script src="/js/js/jquery.js"></script>
+            <script src="/js/js/jquery-ui.js"></script>
+
+            {# datatable #}
+            <script src="https://cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
+
+            {# funcionamiento #}
+            <script src="/js/funcionamiento/validarMsg.js"></script>
+            
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
     </body>
 </html>
