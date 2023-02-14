@@ -36,6 +36,18 @@ class Mensaje
     #[ORM\Column]
     private ?bool $valido = null;
 
+    public function toArray(){
+        return [
+            'id'=>$this->getId(),
+            'fecha'=>$this->getFecha()->format('Y-m-d H:i:s'),
+            'banda'=>$this->getBanda()->getId(),
+            'modo'=>$this->getModo()->getId(),
+            'emisor'=>$this->getEmisor()->getId(),
+            'receptor'=>$this->getReceptor()->getId(),
+            'valido'=>$this->isValido(),
+        ];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
